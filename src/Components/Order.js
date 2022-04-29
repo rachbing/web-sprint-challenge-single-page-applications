@@ -1,93 +1,115 @@
-import react from 'react';
+import React from "react";
+import "./Order.css";
 
-const Order = (props) => {
-    const { change, submit, errors } = props;
-    const { name, size, toppings, special } = props.values;
+export default function Order(props) {
 
-    const onChange = (evt) => {
-        const { name, value, checked, type } = evt.target;
-        const newVal = type === 'checkbox' ? checked : value;
-        change(name, newVal);
+    const { values, update, submit, } = props
+
+    const onChange = evt => {
+        console.log("EVT.TARGET.VALUE")
+        console.log(evt.target.value)
+        // const { name, value, checked, type } = evt.target
+        // const valueToUse = type === "checkbox" ? checked : value
+        // change(name, valueToUse)
     }
 
-    const onSubmit = (evt) => {
-        evt.preventDefault();
+    const onSubmit = evt => {
+        evt.preventDefault()
         submit();
     }
+    
     return (
         <div>
             <h1> Order a pizza now! </h1>
             <div className="form">
-                <form id="pizza-form" onSubmit={onSubmit}>
-                    <div className="name">
-                        <h4>Enter your name</h4>
-                    <label id="name-input">
-                        <input
-                            type="text"
-                            name="name"
-                            value={name}
-                            placeholder="type your name"
-                            onChange={onChange}
-                        />
-                    </label>
-                    </div>
-                    <div className="size">
-                        <h4>Choose pizza size</h4>
-                        <label id="size-dropdown">
-                            <select value={size.size} name="size" onChange={onChange}>
-                                <option value="">-- Select a size --</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="large">Large</option>
-                            </select>
-                        </label>
-                    </div>
+            <form id="pizza-form" onSubmit={onSubmit}>
+                <div className="name">
+                    <h4>Enter your name</h4>
+                <label id="name-input">
+                    <input 
+                        type="text"
+                        name="name"
+                        placeholder="type your name"
+                        onChange={onChange}
+                    />
+                </label>
+                </div>
 
-                    <div className="toppings">
-                        <h4>Toppings</h4>
-                        <div className="toptop">
-                            <label>Pepperoni
-                                <input
-                                    type="checkbox"
-                                    name="top1"
-                                    onChange={onChange}
-                                    checked={toppings.top1}
-                                />
-                            </label>
-                            <label>Pineapple
-                                <input
-                                    type="checkbox"
-                                    name="top2"
-                                    onChange={onChange}
-                                    checked={toppings.top2}
-                                />
-                            </label>
-                            <label>Mushrooms
-                                <input
-                                    type="checkbox"
-                                    name="top3"
-                                    onchange={onChange}
-                                    checked={toppings.top3}
-                                />
-                            </label>
-                            <label>Sausage
-                                <input
-                                    type="checkbox"
-                                    name="top4"
-                                    onChange={onChange}
-                                    checked={toppings.top4}
-                                />
-                            </label>
-                            
-                        </div>
+                <div className="size">
+                    <h4>Choose pizza size</h4>
+                <label id="size-dropdown">
+                    
+                     <select value={values.size} name="size" onChange={onChange}>
+                     <option value="">-- Select a Size --</option>
+                     <option value="small">small</option>
+                     <option value="medium">medium</option>
+                     <option value="large">large</option>
+                   </select>
 
-                    </div>
-                </form>
+                </label>
+                </div>
+
+                <div className="toppings">
+                    <h4>Toppings</h4>
+                    <div className="toptop">
+                        <div className="colone">
+                    <label>Pepperoni
+                    <input
+                        type="checkbox"
+                        name="Pepperoni"
+                        onChange={onChange}
+                        checked={values.pepperoni}
+                    />
+                </label>
+                <label>Pineapple
+                    <input
+                        type="checkbox"
+                        name="Pineapple"
+                        onChange={onChange}
+                        checked={values.pineapple}
+                    />
+                </label>
+                </div>
+
+                <div className="coltwo">
+                <label>Extra cheese
+                    <input
+                        type="checkbox"
+                        name="extraCheese"
+                        onChange={onChange}
+                        checked={values.extraCheese}
+                    />
+                </label>
+                <label>Sausage
+                    <input
+                        type="checkbox"
+                        name="Sausage"
+                        onChange={onChange}
+                        checked={values.sausage}
+                    />
+                </label>
+                </div>
+                </div>
+                
+                </div>
+                <div className="special">
+                <h4>Special instructions</h4>
+                <label id="special-text">
+                    <input 
+                        className="specialBox"
+                        type="textarea"
+                        name="special"
+                        placeholder="special instructions"
+                        onChange={onChange}
+                    />
+                </label>
+                </div>
+                <div className='submit'>
+                    <button>submit</button>
+                </div>
+            </form>
             </div>
-            
         </div>
     )
-
-
 }
-export default Order ;
+

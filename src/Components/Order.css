@@ -1,0 +1,47 @@
+.toppings {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+}
+
+
+#pizza-form {
+    height: 60vh;
+}
+.toptop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.submit {
+    margin-top: 4vh;
+}
+
+.colone {
+    display: flex;
+    height: 8vh;
+    flex-direction: column;
+    margin: 2vh;
+    justify-content: space-around;
+}
+
+.coltwo {
+    display: flex;
+    flex-direction: column;
+    margin:2vh;
+    height: 8vh;
+    justify-content: space-around;
+}
+
+.specialBox {
+    height: 10vh;
+    width: 27vh;
+}

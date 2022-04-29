@@ -1,8 +1,8 @@
-import react from 'react';
+import React from "react";
 
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom"
 
-const Home = (props) => {
+export default function Home() {
 
     const history = useHistory();
 
@@ -11,7 +11,6 @@ const Home = (props) => {
     }
 
     return (
-        <h1> Make a pizza with us! </h1>
+        <h1>Make a pizza with us!</h1>
     )
 }
-export default Home;

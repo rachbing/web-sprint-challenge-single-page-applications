@@ -5,20 +5,13 @@ import Order from "./Components/Order";
 import axios from "axios";
 
 import { Route, Link, Switch } from "react-router-dom";
+import "./App.css"
 
-console.log("hello")
 
 const initialFormValues = {
-  name: '',
-  size: '',
-  toppings: false,
-  special: ''
-}
-
-const initialFormErrors = {
-  name: '',
-  size: '',
-  toppings: false,
+  name:'',
+  size:'',
+  toppings:'',
   special:''
 }
 
@@ -26,60 +19,74 @@ const App = () => {
   const [order, setOrder] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState("");
-
+  
   const updateForm = (inputName, inputValue) => {
-    setFormValues({...formValues, [inputName]: inputValue});
-  }
-
-  const postNewOrder = () => {
-    axios.post('https://reqres.in/api/orders', formValues)
-      .then(res => {
-        setOrder([ res.data, ...order])
-      })
-      .catch(err => console.error(err))
-      .finally(() => setFormValues(initialFormValues))
+    setFormValues({ ...formValues, [inputName]: inputValue});
   }
 
   const submitForm = () => {
     const newOrder = {
       name: formValues.name,
       size: formValues.size,
-      top1: formValues.top1,
-      top2: formValues.top2,
-      top3: formValues.top3,
-      top4: formValues.top4,
+      pepperoni: formValues.pepperoni,
+      pineapple: formValues.pineapple,
+      extraCheese: formValues.extraCheese,
+      sausage: formValues.sausage,
       special: formValues.special
     }
-    postNewOrder(newOrder)
+    // if (!newOrder.name) {
+    //   setFormError("Please enter your name")
+    //   setFormValues(initialFormValues);
+    //   return;
+    // }
+    // if(newOrder.name.length < 2) {
+    //   setFormError("name must be at least 2 characters");
+    //   setFormValues(initialFormValues);
+    //   return;
+    // }
+    postNewOrder(newOrder);
   }
+
 
   const inputChange = (name, value) => {
     setFormValues({
       ...formValues,
-      [name]: value
+      [name]: value 
     })
   }
 
 
-
+  const postNewOrder = newOrder => {
+    axios.post("https://reqres.in/api/orders", newOrder)
+      .then(res => {
+        console.log(res)
+          setOrder([res, ...order]);
+      }).catch(err => console.error(err))
+      .finally(() => setFormValues(initialFormValues))
+  }
   return (
     <div className="App">
       <nav>
-        <div className="navBar">
-          <div className="title">
-            <h1> BloomTech Eats </h1>
-          </div>
-          <div className="nav-links">
-
-            <Link to="/"> <button>Home</button></Link>
-            <Link to="/pizza"> <button id="order-pizza">Pizza?</button></Link>
-          </div>
+      
+      <div className="navBar">
+        <div className="title">
+          <h1>Lambda Eats</h1>
         </div>
+        <div className="nav-links">
+        
+        <Link to="/"> <button>Home</button> </Link>
+        <Link to="/pizza"> <button id="order-pizza">Pizza?</button></Link>  
+        </div>
+      </div>
+        {/* <Link to="/">Home</Link>
+        <Link to="/pizza">pizza?</Link>" */}
+        
       </nav>
-      <Switch>
-        <Route path="/pizza">
+      
+      <Switch> 
+      <Route path="/pizza">
 
-          <Order
+          <Order 
             values={formValues}
             update={updateForm}
             submit={submitForm}
@@ -87,10 +94,10 @@ const App = () => {
             errors={formErrors}
           />
         </Route>
-
         <Route path="/">
           <Home />
         </Route>
+       
       </Switch>
       { formErrors && <p className="error">{formErrors}</p>}
     </div>
