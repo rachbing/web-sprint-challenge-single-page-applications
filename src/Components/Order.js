@@ -33,7 +33,7 @@ const Order = (props) => {
                     </div>
                     <div className="size">
                         <h4>Choose pizza size</h4>
-                        <label id="size=dropdown">
+                        <label id="size-dropdown">
                             <select value={size.size} name="size" onChange={onChange}>
                                 <option value="">-- Select a size --</option>
                                 <option value="small">Small</option>
@@ -41,6 +41,46 @@ const Order = (props) => {
                                 <option value="large">Large</option>
                             </select>
                         </label>
+                    </div>
+
+                    <div className="toppings">
+                        <h4>Toppings</h4>
+                        <div className="toptop">
+                            <label>Pepperoni
+                                <input
+                                    type="checkbox"
+                                    name="top1"
+                                    onChange={onChange}
+                                    checked={toppings.top1}
+                                />
+                            </label>
+                            <label>Pineapple
+                                <input
+                                    type="checkbox"
+                                    name="top2"
+                                    onChange={onChange}
+                                    checked={toppings.top2}
+                                />
+                            </label>
+                            <label>Mushrooms
+                                <input
+                                    type="checkbox"
+                                    name="top3"
+                                    onchange={onChange}
+                                    checked={toppings.top3}
+                                />
+                            </label>
+                            <label>Sausage
+                                <input
+                                    type="checkbox"
+                                    name="top4"
+                                    onChange={onChange}
+                                    checked={toppings.top4}
+                                />
+                            </label>
+                            
+                        </div>
+
                     </div>
                 </form>
             </div>
