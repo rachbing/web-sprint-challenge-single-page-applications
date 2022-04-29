@@ -31,7 +31,7 @@ const App = () => {
     setFormValues({...formValues, [inputName]: inputValue});
   }
 
-  const handleSubmit = () => {
+  const postNewOrder = () => {
     axios.post('https://reqres.in/api/orders', formValues)
       .then(res => {
         setOrder([ res.data, ...order])
@@ -40,11 +40,60 @@ const App = () => {
       .finally(() => setFormValues(initialFormValues))
   }
 
+  const submitForm = () => {
+    const newOrder = {
+      name: formValues.name,
+      size: formValues.size,
+      top1: formValues.top1,
+      top2: formValues.top2,
+      top3: formValues.top3,
+      top4: formValues.top4,
+      special: formValues.special
+    }
+    postNewOrder(newOrder)
+  }
+
+  const inputChange = (name, value) => {
+    setFormValues({
+      ...formValues,
+      [name]: value
+    })
+  }
+
+
+
   return (
-    <>
-      <h1>Lambda Eats</h1>
-      <p>You can remove this code and create your own header</p>
-    </>
+    <div className="App">
+      <nav>
+        <div className="navBar">
+          <div className="title">
+            <h1> BloomTech Eats </h1>
+          </div>
+          <div className="nav-links">
+
+            <Link to="/"> <button>Home</button></Link>
+            <Link to="/pizza"> <button id="order-pizza">Pizza?</button></Link>
+          </div>
+        </div>
+      </nav>
+      <Switch>
+        <Route path="/pizza">
+
+          <Order
+            values={formValues}
+            update={updateForm}
+            submit={submitForm}
+            change={inputChange}
+            errors={formErrors}
+          />
+        </Route>
+
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+      { formErrors && <p className="error">{formErrors}</p>}
+    </div>
   );
 };
 export default App;

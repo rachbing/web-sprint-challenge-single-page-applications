@@ -14,3 +14,4 @@ const Home = (props) => {
         <h1> Make a pizza with us! </h1>
     )
 }
+export default Home;
