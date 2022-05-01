@@ -6,9 +6,6 @@ export default function Order(props) {
     const { values, errors, submit, change} = props
 
     const onChange = evt => {
-        console.log("evt", evt)
-        console.log("evt.target", evt.target)
-        console.log("evt.target.value", evt.target.value)
         const { name, value, checked, type } = evt.target
         const valueToUse = type === "checkbox" ? checked : value
         change(name, valueToUse)
@@ -21,15 +18,16 @@ export default function Order(props) {
     }
     
     return (
-        <div>
+        <div >
             <h1> Order a pizza now! </h1>
             <p>{errors.name}</p>
             <div className="form">
             <form id="pizza-form" onSubmit={onSubmit}>
                 <div className="name">
                     <h4>Enter your name</h4>
-                <label id="name-input">
+                <label >
                     <input 
+                        id="name-input"
                         type="text"
                         name="name"
                         placeholder="type your name"
@@ -41,9 +39,9 @@ export default function Order(props) {
 
                 <div className="size">
                     <h4>Choose pizza size</h4>
-                <label id="size-dropdown">
+                <label >
                     
-                     <select value={values.size} name="size" onChange={onChange}>
+                     <select value={values.size} name="size" onChange={onChange} id="size-dropdown">
                      <option value="">-- Select a Size --</option>
                      <option value="small">small</option>
                      <option value="medium">medium</option>
@@ -60,17 +58,17 @@ export default function Order(props) {
                     <label>Pepperoni
                     <input
                         type="checkbox"
-                        name="Pepperoni"
+                        name="pepperoni"
                         onChange={onChange}
-                        checked={values.pepperoni}
+                        value={values.pepperoni}
                     />
                 </label>
                 <label>Pineapple
                     <input
                         type="checkbox"
-                        name="Pineapple"
+                        name="pineapple"
                         onChange={onChange}
-                        checked={values.pineapple}
+                        value={values.pineapple}
                     />
                 </label>
                 </div>
@@ -81,15 +79,15 @@ export default function Order(props) {
                         type="checkbox"
                         name="extraCheese"
                         onChange={onChange}
-                        checked={values.extraCheese}
+                        value={values.extraCheese}
                     />
                 </label>
                 <label>Sausage
                     <input
                         type="checkbox"
-                        name="Sausage"
+                        name="sausage"
                         onChange={onChange}
-                        checked={values.sausage}
+                        value={values.sausage}
                     />
                 </label>
                 </div>
@@ -101,7 +99,7 @@ export default function Order(props) {
                 <label id="special-text">
                     <input 
                         className="specialBox"
-                        type="textarea"
+                        type="text"
                         name="special"
                         placeholder="special instructions"
                         onChange={onChange}
@@ -110,7 +108,7 @@ export default function Order(props) {
                 </label>
                 </div>
                 <div className='submit'>
-                    <button>submit</button>
+                    <button id="order-button">Add to Order</button>
                 </div>
             </form>
             </div>

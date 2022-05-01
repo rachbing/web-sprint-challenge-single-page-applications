@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Home from "./Components/Home";
 import Order from "./Components/Order";
 
@@ -27,7 +27,6 @@ const initialFormValues = {
 
 const initialFormErrors = {
   name: '',
-  size: '',
   special: '',
 }
 
@@ -44,13 +43,13 @@ const App = () => {
 
   const submitForm = () => {
     const newOrder = {
-      name: formValues.name.trim(),
+      name: formValues.name,
       size: formValues.size,
       pepperoni: formValues.pepperoni,
       pineapple: formValues.pineapple,
       extraCheese: formValues.extraCheese,
       sausage: formValues.sausage,
-      special: formValues.special.trim()
+      special: formValues.special
     }
     // if (!newOrder.name) {
     //   setFormError("Please enter your name")
@@ -65,12 +64,17 @@ const App = () => {
     postNewOrder(newOrder);
   }
 
+  useEffect(()=>{
+    console.log(order)
+  },[])
+
 
   const postNewOrder = newOrder => {
     axios.post("https://reqres.in/api/orders", newOrder)
       .then(res => {
         console.log(res)
-          setOrder([res.data, ...order]);
+          setOrder([...order, res.data]);
+          console.log("ORDER", order)
       }).catch(err => console.error(err))
       .finally(() => setFormValues(initialFormValues))
   }
