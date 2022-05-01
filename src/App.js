@@ -3,22 +3,40 @@ import Home from "./Components/Home";
 import Order from "./Components/Order";
 
 import axios from "axios";
+import schema from "./Validation/formSchema";
+import * as yup from 'yup';
+
 
 import { Route, Link, Switch } from "react-router-dom";
 import "./App.css"
 
 
 const initialFormValues = {
+  // text input
   name:'',
+  //dropdown
   size:'',
-  toppings:'',
+  // checkboxes
+  pepperoni: false,
+  pineapple: false,
+  extraCheese: false,
+  sausage: false,
+  //text input
   special:''
 }
+
+const initialFormErrors = {
+  name: '',
+  size: '',
+  special: '',
+}
+
+
 
 const App = () => {
   const [order, setOrder] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [formErrors, setFormErrors] = useState("");
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
   
   const updateForm = (inputName, inputValue) => {
     setFormValues({ ...formValues, [inputName]: inputValue});
@@ -26,13 +44,13 @@ const App = () => {
 
   const submitForm = () => {
     const newOrder = {
-      name: formValues.name,
+      name: formValues.name.trim(),
       size: formValues.size,
       pepperoni: formValues.pepperoni,
       pineapple: formValues.pineapple,
       extraCheese: formValues.extraCheese,
       sausage: formValues.sausage,
-      special: formValues.special
+      special: formValues.special.trim()
     }
     // if (!newOrder.name) {
     //   setFormError("Please enter your name")
@@ -48,22 +66,30 @@ const App = () => {
   }
 
 
-  const inputChange = (name, value) => {
-    setFormValues({
-      ...formValues,
-      [name]: value 
-    })
-  }
-
-
   const postNewOrder = newOrder => {
     axios.post("https://reqres.in/api/orders", newOrder)
       .then(res => {
         console.log(res)
-          setOrder([res, ...order]);
+          setOrder([res.data, ...order]);
       }).catch(err => console.error(err))
       .finally(() => setFormValues(initialFormValues))
   }
+
+
+  const validate = (name, value) => {
+    yup.reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({...formErrors, [name]: ''}))
+      .catch(err => setFormErrors({...formErrors, [name]: err.errors[0]}))
+  }
+
+  const handleChange = (name, value) => {
+    validate(name, value);
+    setFormValues({...formValues, [name]: value});
+
+  }
+
+
   return (
     <div className="App">
       <nav>
@@ -90,7 +116,7 @@ const App = () => {
             values={formValues}
             update={updateForm}
             submit={submitForm}
-            change={inputChange}
+            change={handleChange}
             errors={formErrors}
           />
         </Route>
@@ -99,7 +125,7 @@ const App = () => {
         </Route>
        
       </Switch>
-      { formErrors && <p className="error">{formErrors}</p>}
+      {/* { formErrors && <p className="error">{formErrors}</p>} */}
     </div>
   );
 };

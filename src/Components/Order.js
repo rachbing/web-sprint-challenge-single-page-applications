@@ -3,14 +3,16 @@ import "./Order.css";
 
 export default function Order(props) {
 
-    const { values, update, submit, } = props
+    const { values, errors, submit, change} = props
 
     const onChange = evt => {
-        console.log("EVT.TARGET.VALUE")
-        console.log(evt.target.value)
-        // const { name, value, checked, type } = evt.target
-        // const valueToUse = type === "checkbox" ? checked : value
-        // change(name, valueToUse)
+        console.log("evt", evt)
+        console.log("evt.target", evt.target)
+        console.log("evt.target.value", evt.target.value)
+        const { name, value, checked, type } = evt.target
+        const valueToUse = type === "checkbox" ? checked : value
+        change(name, valueToUse)
+        // const name = evt.target.name
     }
 
     const onSubmit = evt => {
@@ -21,6 +23,7 @@ export default function Order(props) {
     return (
         <div>
             <h1> Order a pizza now! </h1>
+            <p>{errors.name}</p>
             <div className="form">
             <form id="pizza-form" onSubmit={onSubmit}>
                 <div className="name">
@@ -31,6 +34,7 @@ export default function Order(props) {
                         name="name"
                         placeholder="type your name"
                         onChange={onChange}
+                        value={values.name}
                     />
                 </label>
                 </div>
@@ -101,6 +105,7 @@ export default function Order(props) {
                         name="special"
                         placeholder="special instructions"
                         onChange={onChange}
+                        value={values.special}
                     />
                 </label>
                 </div>
@@ -112,4 +117,5 @@ export default function Order(props) {
         </div>
     )
 }
+
 
